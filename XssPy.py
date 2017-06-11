@@ -5,10 +5,6 @@ import argparse
 import logging
 import time 
 from urlparse import urlparse
-from mpi4py import MPI
-
-comm = MPI.COMM_WORLD
-rank = comm.Get_rank()
 
 start_time =  time.time()
 br = mechanize.Browser()  # initiating the browser
@@ -136,14 +132,6 @@ def initializeAndFind():
             pass
         color.log(logging.INFO, color.GREEN,
                   'Number of links to test are: ' + str(len(firstDomains)))
-	Domain = firstDomains
-	firstDomains=[]
-	if (rank == 0):
-	    for i in range (0, len(Domain)/2):
-		firstDomains.append(Domain[i])
-	if (rank == 1):
-	    for i in range (len(Domain)/2,len(Domain)):
-		firstDomains.append(Domain[i])
         if results.compOn:
             color.log(logging.INFO, color.GREEN,
                       'Doing a comprehensive traversal. This may take a while')
